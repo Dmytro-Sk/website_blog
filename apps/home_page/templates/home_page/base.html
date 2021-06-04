@@ -3,15 +3,77 @@
 <html lang="en">
 <head>
 {% block head %}
-    <meta charset="UTF-8">
+
+    {% block meta %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock meta %}
+
+    {% block style %}
+        <link rel="stylesheet" type="text/css" href="{% static 'home_page/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'fontawesome_free/css/all.min.css' %}">
+    {% endblock style %}
 
     <title>{% block title %}{% endblock title%}</title>
 {% endblock head %}
 </head>
-<body>
 {% block body %}
+<body class="{% block bodyclass %}{% endblock %}">
+
+    <div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'home_page:home-page' %}">
+                                <span class="fas fa-home"></span>&nbsp;Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:blog-page' %}">
+                                <span class="fab fa-blogger"></span>&nbsp;Blog
+                            </a>
+                        </li>
+                    </ul>
+                    <form class="d-flex ms-4">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'home_page:home-page' %}">
+                                <span class="fas fa-sign-in-alt"></span>&nbsp;SignIn
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'home_page:home-page' %}">
+                                <span class="fas fa-user-plus"></span>&nbsp;SignUp
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:blog-page' %}">
+                                <span class="fas fa-sign-out-alt"></span>&nbsp;Exit
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     {% block content %}{% endblock content %}
-    {% block script %}{% endblock script %}
-{% endblock body %}
+
+    {% block script %}
+        <script src="{% static 'home_page/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
+    {% endblock script %}
+
 </body>
+{% endblock body %}
 </html>

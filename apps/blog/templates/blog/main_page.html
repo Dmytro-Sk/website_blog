@@ -1,5 +1,18 @@
 {% extends 'home_page/base.html' %}
+
 {% block title %}Blog Page{% endblock title %}
+
 {% block content %}
-<h1>{{ content }}</h1>
+<div class="container-fluid">
+    <a class="btn btn-success" href="{% url 'blog:add-post' %}" role="button">
+        <span class="fas fa-plus"></span>&nbsp;Add a new Post
+    </a>
+    <h1>Posts list</h1>
+    {% for post in posts_list %}
+        <ul>
+            <li><a href="{% url 'blog:post-details' post.pk %}">{{ post.title }}</a> - {{ post.author }}</li>
+            <span>{{ post.body }}</span>
+        </ul>
+    {% endfor %}
+</div>
 {% endblock content %}
