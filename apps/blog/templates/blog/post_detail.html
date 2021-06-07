@@ -9,13 +9,19 @@
             <div class="form-control">
                 <h3 class="text-center border-bottom mb-3">Post Detail</h3>
                 <p>Title:
-                <span class="form-control">{{ post.title }}</span>
+                    <span class="form-control">{{ post.title }}</span>
                 </p>
                 <p>Author:
                     <span class="form-control">{{ post.author }}</span>
                 </p>
+                <p>Category:
+                    <span class="form-control">{{ post.category }}</span>
+                </p>
                 <p>Post text:
                     <span class="form-control">{{ post.body }}</span>
+                </p>
+                <p>Last changing:
+                    <span class="form-control">{{ post.change_post_date }}</span>
                 </p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{% url 'blog:blog-page' %}" class="btn btn-outline-secondary">Back</a>

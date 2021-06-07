@@ -1,8 +1,8 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
 
-from .models import Post
-from .forms import PostForm, EditPostForm
+from .models import Post, Category
+from .forms import CategoryForm, PostForm, EditPostForm
 
 
 class BlogPageView(ListView):
@@ -20,6 +20,12 @@ class AddPostView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/add_post.html'
+
+
+class AddCategoryView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'blog/add_category.html'
 
 
 class UpdatePostView(UpdateView):
