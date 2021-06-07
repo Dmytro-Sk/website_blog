@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404
 
 from .models import Post, Category
 from .forms import CategoryForm, PostForm, EditPostForm
@@ -11,21 +12,15 @@ class BlogPageView(ListView):
     ordering = ['-id']
 
 
-class PostDetailView(DetailView):
-    model = Post
-    template_name = 'blog/post_detail.html'
-
-
 class AddPostView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/add_post.html'
 
 
-class AddCategoryView(CreateView):
-    model = Category
-    form_class = CategoryForm
-    template_name = 'blog/add_category.html'
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_details.html'
 
 
 class UpdatePostView(UpdateView):
@@ -41,3 +36,18 @@ class DeletePostView(DeleteView):
     model = Post
     template_name = 'blog/delete_post.html'
     success_url = reverse_lazy('blog:blog-page')
+
+
+class AddCategoryView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'blog/add_category.html'
+
+
+class CategoryListView(ListView):
+    model = Post
+    template_name = 'blog/category_details.html'
+
+    def get_queryset(self):
+        category = get_object_or_404(Category, name=self.kwargs.get('category').capitalize())
+        return Post.objects.filter(category=category).order_by('-add_post_date')

@@ -1,0 +1,21 @@
+{% extends 'home_page/base.html' %}
+
+{% block title %}Category Details{% endblock title %}
+
+{% block content %}
+<h1 class="text-center my-4">Posts by category "{{ view.kwargs.category|title }}"</h1>
+<div class="container-fluid">
+    {% for post in object_list %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="form-control">
+                    <h4><a href="{% url 'blog:post-details' post.pk %}">{{ post.title|title }}</a></h4>
+                    Author - {{ post.author }}. Category - <a href="{% url 'blog:category-details' post.category.name|lower %}">{{ post.category }}</a>.
+                    <p class="article-content">{{ post.body|truncatewords:50 }}</p>
+                    <small class="text-muted">Added - {{ post.add_post_date }}</small>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
