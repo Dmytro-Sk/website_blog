@@ -49,5 +49,5 @@ class CategoryListView(ListView):
     template_name = 'blog/category_details.html'
 
     def get_queryset(self):
-        category = get_object_or_404(Category, name=self.kwargs.get('category').capitalize())
+        category = get_object_or_404(Category, name=self.kwargs.get('category').capitalize().replace('-', ' '))
         return Post.objects.filter(category=category).order_by('-add_post_date')
