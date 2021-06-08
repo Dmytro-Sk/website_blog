@@ -4,16 +4,6 @@
 
 {% block content %}
 <div class="container-fluid">
-    {% if user.is_authenticated %}
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-            <a class="btn btn-outline-secondary" href="{% url 'blog:add-category' %}" role="button">
-                <span class="fas fa-plus"></span>&nbsp;Add a new Category
-            </a>
-            <a class="btn btn-outline-secondary" href="{% url 'blog:add-post' %}" role="button">
-                <span class="fas fa-plus"></span>&nbsp;Add a new Post
-            </a>
-        </div>
-    {% endif %}
     <h1 class="text-center mt-4">Posts list</h1>
     <div class="container-fluid">
         {% for post in object_list %}
