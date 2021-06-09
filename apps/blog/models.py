@@ -21,6 +21,7 @@ class Post(models.Model):
     add_post_date = models.DateTimeField(auto_now_add=True)
     change_post_date = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    likes = models.ManyToManyField(User, related_name='blog_posts')
 
     def __str__(self):
         return f'{self.title} (by {self.author})'
@@ -28,3 +29,6 @@ class Post(models.Model):
     @staticmethod
     def get_absolute_url():
         return reverse('blog:blog-page')
+
+    def sum_likes(self):
+        return self.likes.count()
