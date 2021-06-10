@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -21,10 +22,12 @@ class Post(models.Model):
     add_post_date = models.DateTimeField(auto_now_add=True)
     change_post_date = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    likes = models.ManyToManyField(User, related_name='blog_posts')
+    likes = models.ManyToManyField(User, related_name='post_likes')
+    dislikes = models.ManyToManyField(User, related_name='post_dislikes')
+    like_updated_at = models.DateTimeField(auto_now=timezone.now())
 
     def __str__(self):
-        return f'{self.title} (by {self.author})'
+        return self.title
 
     @staticmethod
     def get_absolute_url():
@@ -32,3 +35,6 @@ class Post(models.Model):
 
     def sum_likes(self):
         return self.likes.count()
+
+    def sum_dislikes(self):
+        return self.dislikes.count()

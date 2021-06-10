@@ -28,19 +28,17 @@
                     <div class="col-4">
                         <form class="d-inline-block" method="POST" action="{% url 'blog:post-like' object.id %}">
                             {% csrf_token %}
-                            <button class="btn btn-outline-secondary" type="submit"
-                                name="post_id" value="{{ post.id }}">
+                            <button class="btn btn-outline-secondary" type="submit">
                                 <span class="fas fa-thumbs-up"></span>
                             </button>
                             {{ post.sum_likes }}
                         </form>
-                        <form class="d-inline-block" method="POST" action="{#{% url 'blog:post_dislike' post.id %}#}">
+                        <form class="d-inline-block" method="POST" action="{% url 'blog:post-dislike' post.id %}">
                             {% csrf_token %}
-                            <button class="btn btn-outline-secondary" type="submit"
-                                name="post_id" value="{{ post.id }}">
+                            <button class="btn btn-outline-secondary" type="submit">
                                 <span class="fas fa-thumbs-down"></span>
                             </button>
-<!--                            {{ post.sum_likes }}-->
+                            {{ post.sum_dislikes }}
                         </form>
                     </div>
                     <div class="col-8 d-flex justify-content-end">

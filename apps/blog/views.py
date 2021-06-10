@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 from .models import Post, Category
 from .forms import CategoryForm, PostForm, EditPostForm
@@ -62,13 +63,45 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class PostLikeToggleView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         post = get_object_or_404(Post, id=kwargs['pk'])
+        post_qs = Post.objects.filter(id=kwargs['pk'])
         user = self.request.user
         if self.request.user.is_authenticated:
-            if user in post.likes.all():
+            if all([user not in post.likes.all(), user not in post.dislikes.all()]):
+                post.likes.add(user)
+                post_qs.update(like_updated_at=timezone.now())
+                return reverse('blog:post-details', kwargs={'pk': kwargs['pk']})
+            elif user in post.likes.all():
                 post.likes.remove(user)
+            elif user in post.dislikes.all():
+                post.dislikes.remove(user)
+                post.likes.add(user)
+                post_qs.update(like_updated_at=timezone.now())
             else:
                 post.likes.add(user)
-        return reverse('blog:post-details', kwargs={'pk': kwargs['pk']})
+                post_qs.update(like_updated_at=timezone.now())
+            return reverse('blog:post-details', kwargs={'pk': kwargs['pk']})
+
+
+class PostDislikeToggleView(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        post = get_object_or_404(Post, id=kwargs['pk'])
+        post_qs = Post.objects.filter(id=kwargs['pk'])
+        user = self.request.user
+        if self.request.user.is_authenticated:
+            if all([user not in post.likes.all(), user not in post.dislikes.all()]):
+                post.dislikes.add(user)
+                post_qs.update(like_updated_at=timezone.now())
+                return reverse('blog:post-details', kwargs={'pk': kwargs['pk']})
+            elif user in post.likes.all():
+                post.likes.remove(user)
+                post.dislikes.add(user)
+                post_qs.update(like_updated_at=timezone.now())
+            elif user in post.dislikes.all():
+                post.dislikes.remove(user)
+            else:
+                post.dislikes.add(user)
+                post_qs.update(like_updated_at=timezone.now())
+            return reverse('blog:post-details', kwargs={'pk': kwargs['pk']})
 
 
 class AddCategoryView(CreateView):
