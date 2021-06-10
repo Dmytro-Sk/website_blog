@@ -28,16 +28,28 @@
                     <div class="col-4">
                         <form class="d-inline-block" method="POST" action="{% url 'blog:post-like' object.id %}">
                             {% csrf_token %}
+                            {% if request.user in post.likes.all %}
+                            <button class="btn btn-outline-secondary active" type="submit">
+                                <span class="fas fa-thumbs-up"></span>
+                            </button>
+                            {% else %}
                             <button class="btn btn-outline-secondary" type="submit">
                                 <span class="fas fa-thumbs-up"></span>
                             </button>
+                            {% endif %}
                             {{ post.sum_likes }}
                         </form>
                         <form class="d-inline-block" method="POST" action="{% url 'blog:post-dislike' post.id %}">
                             {% csrf_token %}
+                            {% if request.user in post.dislikes.all %}
+                            <button class="btn btn-outline-secondary active" type="submit">
+                                <span class="fas fa-thumbs-down"></span>
+                            </button>
+                            {% else %}
                             <button class="btn btn-outline-secondary" type="submit">
                                 <span class="fas fa-thumbs-down"></span>
                             </button>
+                            {% endif %}
                             {{ post.sum_dislikes }}
                         </form>
                     </div>
