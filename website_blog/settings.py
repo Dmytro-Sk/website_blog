@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.blog',
     'fontawesome_free',
     'crispy_forms',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,17 @@ LOGIN_REDIRECT_URL = 'home_page:home-page'
 LOGOUT_REDIRECT_URL = 'home_page:home-page'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        # 'toolbar': 'Custom',
+        # 'toolbar_Custom': [
+        #     ['Bold', 'Italic', 'Underline'],
+        #     ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
+        #      'JustifyRight', 'JustifyBlock'],
+        #     ['Link', 'Unlink'],
+        #     ['RemoveFormat', 'Source']
+        # ],
+        'width': '100%'
+    },
+}

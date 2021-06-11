@@ -1,4 +1,5 @@
 {% extends 'home_page/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Register{% endblock title%}
 
@@ -8,7 +9,7 @@
             <div class="col-sm-3">
                 <form method="POST" class="form-control">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-outline-secondary" type="submit">Register</button>
 <!--                        <button class="btn btn-outline-secondary" type="reset">Reset Form</button>-->

@@ -12,7 +12,7 @@
                     <div class="form-control">
                         <h4><a href="{% url 'blog:post-details' post.pk %}">{{ post.title|title }}</a></h4>
                         Author - {{ post.author }}. Category - <a href="{% url 'blog:category-details' post.category.name|lower|slugify %}">{{ post.category }}</a>.
-                        <p class="article-content">{{ post.body|truncatewords:50 }}</p>
+                        <p class="article-content">{{ post.body|safe|truncatewords:50 }}</p>
                         <small class="text-muted">Added - {{ post.add_post_date }}</small>
                     </div>
                 </div>

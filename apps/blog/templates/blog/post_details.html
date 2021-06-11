@@ -18,7 +18,7 @@
                     <span class="form-control">{{ post.category }}</span>
                 </p>
                 <p>Post text:
-                    <span class="form-control">{{ post.body }}</span>
+                    <span class="form-control">{{ post.body|safe }}</span>
                 </p>
                 <p>Last changing:
                     <span class="form-control">{{ post.change_post_date }}</span>
