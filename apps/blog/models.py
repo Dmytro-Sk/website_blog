@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 from ckeditor.fields import RichTextField
+from PIL import Image
 
 
 class Category(models.Model):
@@ -18,6 +19,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
+    post_image = models.ImageField(blank=True, null=True, upload_to='images/')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
     # body = models.TextField()
@@ -40,3 +42,13 @@ class Post(models.Model):
 
     def sum_dislikes(self):
         return self.dislikes.count()
+
+    def save(self):
+        super().save()
+
+        img = Image.open(self.post_image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.post_image.path)

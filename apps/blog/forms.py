@@ -18,16 +18,18 @@ class CategoryForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'category', 'body']
+        fields = ['title', 'category', 'body', 'post_image']
         labels = {
             'title': 'Post Title*',
             'category': 'Choose Category*',
             'body': 'Post Text*',
+            'post_image': 'Add image',
         }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-select'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter text here'})
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter text here'}),
+            'post_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -36,4 +38,5 @@ class EditPostForm(PostForm):
         'title': 'Edit Post Title',
         'category': 'Edit Post Category',
         'body': 'Edit Post Text',
+        'post_image': 'Change Post Image',
     }
