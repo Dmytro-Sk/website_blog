@@ -7,9 +7,10 @@
     <div class="container-fluid mt-4">
         <div class="row justify-content-center">
             <div class="col-sm-3">
-                <form method="POST" class="form-control">
+                <form method="POST" class="form-control" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form|crispy }}
+                    {{ u_form|crispy }}
+                    {{ p_form|crispy }}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-outline-secondary" type="submit">Update Profile</button>
                         <a class="btn btn-outline-secondary" href="{% url 'home_page:home-page' %}">Cancel</a>

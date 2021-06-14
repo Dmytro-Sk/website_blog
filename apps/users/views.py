@@ -1,9 +1,11 @@
-from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.urls import reverse_lazy
+from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
-from .forms import UserRegisterForm, UserEditForm
+from .forms import UserRegisterForm, UserEditForm, ProfileEditForm
 
 
 class UserRegisterView(CreateView):
@@ -16,17 +18,26 @@ class UserLogInView(LoginView):
     template_name = 'users/login.html'
 
 
-class ProfileView(LoginRequiredMixin, UpdateView):
-    form_class = UserEditForm
-    template_name = 'users/profile_edit.html'
-    success_url = reverse_lazy('home_page:home-page')
+@login_required()
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserEditForm(request.POST, instance=request.user)
+        p_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('users:profile')
+    else:
+        u_form = UserEditForm(instance=request.user)
+        p_form = ProfileEditForm(instance=request.user.profile)
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super(ProfileView, self).form_valid(form)
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
 
-    def get_object(self, queryset=None):
-        return self.request.user
+    return render(request, 'users/profile_edit.html', context)
 
 
 class PasswordEditView(PasswordChangeView):
