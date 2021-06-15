@@ -18,14 +18,14 @@
                     <span class="form-control">{{ post.category }}</span>
                 </p>
                 <p>Post text:
-                    <dir class="form-control">
-                        <span>{{ post.body|safe }}</span>
-                    </dir>
+                <dir class="form-control">
+                    <span>{{ post.body|safe }}</span>
+                </dir>
                 </p>
                 <p>Post image:
-                    <dir class="form-control">
-                        <img class="rounded-circle account-img" src="{{ post.post_image.url }}" alt="Post image">
-                    </dir>
+                <dir class="form-control">
+                    <img class="rounded-circle account-img" src="{{ post.post_image.url }}" alt="Post image">
+                </dir>
                 </p>
                 <p>Last changing:
                     <span class="form-control">{{ post.change_post_date }}</span>

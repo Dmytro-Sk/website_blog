@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.blog',
     'fontawesome_free',
     'crispy_forms',
+    'crispy_bootstrap5',
     'ckeditor',
 ]
 
@@ -138,7 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home_page:home-page'
 LOGOUT_REDIRECT_URL = 'home_page:home-page'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CKEDITOR_CONFIGS = {
     'default': {

@@ -8,10 +8,7 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['name']
         labels = {
-            'name': 'New Category*',
-        }
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': 'New Category',
         }
 
 
@@ -20,16 +17,9 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'category', 'body', 'post_image']
         labels = {
-            'title': 'Post Title*',
-            'category': 'Choose Category*',
-            'body': 'Post Text*',
-            'post_image': 'Add image',
-        }
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-select'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter text here'}),
-            'post_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'title': 'Post Title',
+            'category': 'Choose Category',
+            'body': 'Post Text',
         }
 
 
