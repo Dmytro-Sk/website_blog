@@ -14,6 +14,9 @@
                     {% csrf_token %}
                     {{ u_form|crispy }}
                     {{ p_form|crispy }}
+                    <p class="text-muted">Do you want to change your password?
+                        <a href="{% url 'users:password-edit' %}">Click here</a>
+                    </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-outline-secondary" type="submit">Update</button>
                         <a class="btn btn-outline-secondary" href="{% url 'home_page:home-page' %}">Cancel</a>
