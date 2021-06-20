@@ -3,9 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .models import Post, Category
 from .forms import CategoryForm, PostForm, EditPostForm
+from .serializer import PostSerializer
 
 
 class BlogPageView(ListView):
@@ -117,3 +120,10 @@ class CategoryListView(ListView):
     def get_queryset(self):
         category = get_object_or_404(Category, name=self.kwargs.get('category').capitalize().replace('-', ' '))
         return Post.objects.filter(category=category).order_by('-add_post_date')
+
+
+class PostAPIView(APIView):
+    def get(self, request):
+        queryset = Post.objects.all()
+        serializer_class = PostSerializer(queryset, many=True)
+        return Response(serializer_class.data)

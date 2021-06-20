@@ -15,4 +15,6 @@ urlpatterns = [
 
     path('category/add/', views.AddCategoryView.as_view(), name='add-category'),
     path('category/<str:category>/details/', views.CategoryListView.as_view(), name='category-details'),
+
+    path('api/posts/', views.PostAPIView.as_view())
 ]
