@@ -4,8 +4,12 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .forms import UserRegisterForm, UserEditForm, ProfileEditForm
+from .models import Profile
+from .serializer import ProfileSerializer
 
 
 class UserRegisterView(CreateView):
@@ -43,3 +47,10 @@ def profile(request):
 class PasswordEditView(PasswordChangeView):
     template_name = 'users/password_edit.html'
     success_url = reverse_lazy('login')
+
+
+class ProfileAPIView(APIView):
+    def get(self, request):
+        queryset = Profile.objects.all()
+        serializer_class = ProfileSerializer(queryset, many=True)
+        return Response(serializer_class.data)
